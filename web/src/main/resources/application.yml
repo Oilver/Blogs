@@ -1,0 +1,31 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9090/eureka/
+server:
+  port: 9091
+spring:
+  application:
+    name: web
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+    mode: HTML5
+    encoding: utf-8
+    content-type: text/html
+    cache: false
+
+zuul:
+  routes:
+    api-a:
+      path: /customer/**
+      serviceId: customer-service
+      sensitiveHeaders:
+    api-b:
+      path: /article/**
+      serviceId: article-service
+      sensitiveHeaders:
+    api-c:
+      path: /message/**
+      serviceId: message-service
+      sensitiveHeaders:

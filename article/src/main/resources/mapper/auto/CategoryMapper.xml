@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deng.article.mapper.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.deng.article.entity.Category" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="NAME" property="name" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from category
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from category
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.deng.article.entity.Category" >
+    insert into category (ID, NAME)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deng.article.entity.Category" >
+    insert into category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deng.article.entity.Category" >
+    update category
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deng.article.entity.Category" >
+    update category
+    set NAME = #{name,jdbcType=CHAR}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

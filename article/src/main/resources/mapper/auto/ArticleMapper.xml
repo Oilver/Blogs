@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deng.article.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.deng.article.entity.Article" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="CATEGORY_ID" property="categoryId" jdbcType="CHAR" />
+    <result column="PICTURE" property="picture" jdbcType="CHAR" />
+    <result column="TITLE" property="title" jdbcType="CHAR" />
+    <result column="READ_NUMBER" property="readNumber" jdbcType="INTEGER" />
+    <result column="LIKE_NUMBER" property="likeNumber" jdbcType="INTEGER" />
+    <result column="MESS_NUMBER" property="messNumber" jdbcType="INTEGER" />
+    <result column="UPDATED_TIME" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATED_USER" property="updatedUser" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.deng.article.entity.ArticleWithBLOBs" extends="BaseResultMap" >
+    <result column="INTRODUCTION" property="introduction" jdbcType="LONGVARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CATEGORY_ID, PICTURE, TITLE, READ_NUMBER, LIKE_NUMBER, MESS_NUMBER, UPDATED_TIME, 
+    UPDATED_USER
+  </sql>
+  <sql id="Blob_Column_List" >
+    INTRODUCTION, CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from article
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.deng.article.entity.ArticleWithBLOBs" >
+    insert into article (ID, CATEGORY_ID, PICTURE, 
+      TITLE, READ_NUMBER, LIKE_NUMBER, 
+      MESS_NUMBER, UPDATED_TIME, UPDATED_USER, 
+      INTRODUCTION, CONTENT)
+    values (#{id,jdbcType=CHAR}, #{categoryId,jdbcType=CHAR}, #{picture,jdbcType=CHAR}, 
+      #{title,jdbcType=CHAR}, #{readNumber,jdbcType=INTEGER}, #{likeNumber,jdbcType=INTEGER}, 
+      #{messNumber,jdbcType=INTEGER}, #{updatedTime,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=CHAR}, 
+      #{introduction,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deng.article.entity.ArticleWithBLOBs" >
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="categoryId != null" >
+        CATEGORY_ID,
+      </if>
+      <if test="picture != null" >
+        PICTURE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="readNumber != null" >
+        READ_NUMBER,
+      </if>
+      <if test="likeNumber != null" >
+        LIKE_NUMBER,
+      </if>
+      <if test="messNumber != null" >
+        MESS_NUMBER,
+      </if>
+      <if test="updatedTime != null" >
+        UPDATED_TIME,
+      </if>
+      <if test="updatedUser != null" >
+        UPDATED_USER,
+      </if>
+      <if test="introduction != null" >
+        INTRODUCTION,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=CHAR},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=CHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=CHAR},
+      </if>
+      <if test="readNumber != null" >
+        #{readNumber,jdbcType=INTEGER},
+      </if>
+      <if test="likeNumber != null" >
+        #{likeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="messNumber != null" >
+        #{messNumber,jdbcType=INTEGER},
+      </if>
+      <if test="updatedTime != null" >
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null" >
+        #{updatedUser,jdbcType=CHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deng.article.entity.ArticleWithBLOBs" >
+    update article
+    <set >
+      <if test="categoryId != null" >
+        CATEGORY_ID = #{categoryId,jdbcType=CHAR},
+      </if>
+      <if test="picture != null" >
+        PICTURE = #{picture,jdbcType=CHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=CHAR},
+      </if>
+      <if test="readNumber != null" >
+        READ_NUMBER = #{readNumber,jdbcType=INTEGER},
+      </if>
+      <if test="likeNumber != null" >
+        LIKE_NUMBER = #{likeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="messNumber != null" >
+        MESS_NUMBER = #{messNumber,jdbcType=INTEGER},
+      </if>
+      <if test="updatedTime != null" >
+        UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null" >
+        UPDATED_USER = #{updatedUser,jdbcType=CHAR},
+      </if>
+      <if test="introduction != null" >
+        INTRODUCTION = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.deng.article.entity.ArticleWithBLOBs" >
+    update article
+    set CATEGORY_ID = #{categoryId,jdbcType=CHAR},
+      PICTURE = #{picture,jdbcType=CHAR},
+      TITLE = #{title,jdbcType=CHAR},
+      READ_NUMBER = #{readNumber,jdbcType=INTEGER},
+      LIKE_NUMBER = #{likeNumber,jdbcType=INTEGER},
+      MESS_NUMBER = #{messNumber,jdbcType=INTEGER},
+      UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+      UPDATED_USER = #{updatedUser,jdbcType=CHAR},
+      INTRODUCTION = #{introduction,jdbcType=LONGVARCHAR},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deng.article.entity.Article" >
+    update article
+    set CATEGORY_ID = #{categoryId,jdbcType=CHAR},
+      PICTURE = #{picture,jdbcType=CHAR},
+      TITLE = #{title,jdbcType=CHAR},
+      READ_NUMBER = #{readNumber,jdbcType=INTEGER},
+      LIKE_NUMBER = #{likeNumber,jdbcType=INTEGER},
+      MESS_NUMBER = #{messNumber,jdbcType=INTEGER},
+      UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+      UPDATED_USER = #{updatedUser,jdbcType=CHAR}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deng.message.mapper.MessageMapperExt" >
+
+    <select id="queryCount" resultType="int">
+        select count(*) from message where ARTICLE_ID = #{articleId}
+    </select>
+
+    <select id="getMessageByArticleId" resultType="com.deng.message.web.result.MessageResult">
+        select id,floor,article_id as articleId,content as content,updated_time as updatedTime,
+        updated_user as updatedUser
+        from message
+        where ARTICLE_ID = #{articleId}
+        order by floor
+    </select>
+</mapper>

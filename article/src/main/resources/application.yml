@@ -1,0 +1,13 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9090/eureka/
+server:
+  port: 9093
+spring:
+  application:
+    name: article-service
+
+feign:
+  hystrix:
+    enabled: true

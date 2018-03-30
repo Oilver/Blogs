@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oliver's blog</title>
+    <link href="css/reset.css" rel="stylesheet"/>
+    <link href="css/font-awesome.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+    <link href="css/list.css" rel="stylesheet"/>
+    <link href="css/details.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+    <header>
+        <div class="user-header">
+                <span><a href="#" @click="register()"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;注册</a></span>
+                <span><a href="#" @click="login()"><i class="fa fa-user"></i>&nbsp;&nbsp;登录</a></span>
+            <span class="search" style="margin: 0;position:relative;">
+                <input type="text" placeholder="搜索文章"><i class="fa fa-search search-icon"></i>
+            </span>
+        </div>
+        <ul class="nav">
+            <li :class="{active:active == 0}"><a href="#" @click="isIndex = true,isDetail = false,isList=false,active =0,getData(0)">博客首页</a></li>
+            <li :class="{active:active == 1}"><a href="#" @click="showList(1)">基础知识</a></li>
+            <li :class="{active:active == 2}"><a href="#" @click="showList(2)">技术框架</a></li>
+            <li :class="{active:active == 3}"><a href="#" @click="showList(3)">全栈开发</a></li>
+            <li :class="{active:active == 4}"><a href="#" @click="showList(4)">网络知识</a></li>
+            <li :class="{active:active == 5}"><a href="#" @click="showList(5)">数据结构</a></li>
+            <li :class="{active:active == 6}"><a href="#" @click="showList(6)">常用工具</a></li>
+            <li :class="{active:active == 7}"><a href="#" @click="showList(7)">后端面试</a></li>
+            <li :class="{active:active == 8}"><a href="#" @click="showList(8)">其他分类</a></li>
+        </ul>
+    </header>
+    <div id="mainbody" class="clearfix">
+        <div class="info" v-if="isIndex">
+            <figure> <img src="images/info_img.jpg" alt="Panama Hat">
+            </figure>
+            <div class="card" id="blog-info">
+                <h1>博主信息</h1>
+                <p>网&emsp;名：豆哥爱瓜子一辈子HY</p>
+                <p>职&emsp;业：Java工程师</p>
+                <p>微&emsp;信：Oooliverr</p>
+                <p>Email：543527507@qq.com</p>
+                <ul class="linkmore">
+                    <li><a href="" class="talk" title="给我留言"></a></li>
+                    <li><a href="" class="address" title="联系地址"></a></li>
+                    <li><a href="" class="email" title="给我写信"></a></li>
+                    <li><a href="" class="photos" title="生活照片"></a></li>
+                    <li><a href="" class="heart" title="关注我"></a></li>
+                </ul>
+            </div>
+            <!--<div class="card" id="login" v-show="isLoginShow">-->
+                <!--<h1>登录</h1>-->
+                <!--<p>用户名：<input type="text" name="username"></p>-->
+                <!--<p>密&nbsp;码：<input type="password" name="password"></p>-->
+                <!--<p class="checkout">没有账号？点击进行 <a id="toRegister" href="javascript:;" @click="isRegisterShow = true,isLoginShow = false">注册</a></p>-->
+                <!--<ul class="linkmore">-->
+                    <!--<li><a href="" class="talk" title="给我留言"></a></li>-->
+                    <!--<li><a href="" class="address" title="联系地址"></a></li>-->
+                    <!--<li><a href="" class="email" title="给我写信"></a></li>-->
+                    <!--<li><a href="" class="photos" title="生活照片"></a></li>-->
+                    <!--<li><a href="" class="heart" title="关注我"></a></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        </div>
+        <!--info end-->
+        <div class="blogs clearfix" >
+            <ul class="bloglist" v-if="isIndex || isList">
+                <li v-for="(item,index) in articleLimit">
+                    <div class="arrow_box">
+                        <h2 class="title"><a href="#" @click="showArticleDetails(item.id)">{{item.title}}</a></h2>
+                        <ul class="textinfo">
+                            <img :src="item.picture">
+                            <p>{{item.introduction}}</p>
+                        </ul>
+                        <ul class="details">
+                            <li class="likes"><a href="#">{{item.likeNumber}}</a></li>
+                            <li class="comments"><a href="#">{{item.messNumber}}</a></li>
+                            <li class="icon-time"><a href="#">{{item.updatedTime}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="ti"></div>
+                    <!--三角形-->
+                    <div class="ci"></div>
+                    <!--圆形-->
+                    <!--arrow_box end-->
+                </li>
+                <div style="text-align: center;">
+                    <a href="javascript:void(0)"  class="showMoreArticle" @click="limitArticleNum()">{{moreMessage}}</a>
+                </div>
+            </ul>
+            <div class="content" v-if="isDetail">
+                <div id="index_view">
+                    <h2 class="t_nav"><a href="index.html">网站首页</a><a href="#" @click="showList(detail.categoryId)">{{detail.categoryName}}</a></h2>
+                    <h1 class="c_titile">{{detail.title}}</h1>
+                    <p class="box">发布时间：{{detail.updatedTime}}<span>编辑：{{detail.updatedUser}}</span>阅读（{{detail.readNumber}}）</p>
+                    <ul>
+                        <p>{{detail.introduction}} </p>
+                        <p><img :src="detail.picture" alt="detail.picture"></p>
+                        <p>{{detail.content}}</p>
+                    </ul>
+                </div>
+                <div id="remark">
+                    <textarea placeholder="请写下您的评论"></textarea>
+                    <div class="sub_box">
+                        <input type="button" value="提交" class="remark_sub">
+                        <li class="icon-time"><a href="#">{{currentTime | timeFormat}}</a></li>
+                    </div>
+                    <div id="hr1"></div>
+                </div>
+            </div>
+            <!--bloglist end-->
+            <aside>
+                <div class="tuijian">
+                    <h2>推荐文章</h2>
+                    <ol>
+                        <li><span><strong>1</strong></span><a href="http://www.igeekbar.com/igeekbar/post/229.htm" target="_blank">从HTTP切换到HTTPS的完整指南</a></li>
+                        <li><span><strong>2</strong></span><a href="https://juejin.im/post/5959edfc5188250d83241399" target="_blank">V8 性能优化杀手</a></li>
+                        <li><span><strong>3</strong></span><a href="https://juejin.im/post/595910236fb9a06ba646398e" target="_blank">如何阅读框架源代码</a></li>
+                        <li><span><strong>4</strong></span><a href="https://juejin.im/zhuanlan/frontend" target="_blank">HTML5 进阶系列：文件上传下载</a></li>
+                        <li><span><strong>5</strong></span><a href="https://juejin.im/post/59575183f265da6c4f34c3f7" target="_blank">TC39，ECMAScript 和 JavaScript 的未来（Part 1）</a></li>
+                        <li><span><strong>6</strong></span><a href="https://juejin.im/post/5957046b5188250d824940df" target="_blank">前端周刊第61期：你离 CTC 有多远？</a></li>
+                        <li><span><strong>7</strong></span><a href="https://juejin.im/post/59566b56f265da6c2a746e73" target="_blank">如何将 Google Auto Draw 移植到小程序上</a></li>
+                        <li><span><strong>8</strong></span><a href="https://juejin.im/post/59545e576fb9a06bb0191b41" target="_blank">JS的平凡之路--模仿Vue写个数组监听</a></li>
+                        <li><span><strong>9</strong></span><a href="https://juejin.im/post/5955eefb6fb9a06b9b73908c" target="_blank">利用css对shiny页面优化及利用htmlwidgets包创建HTML控件</a></li>
+                    </ol>
+                </div>
+                <div class="toppic">
+                    <h2>学习站点</h2>
+                    <ul>
+                        <li><a href="http://coding.imooc.com/class/187.html?mc_marking=32f08dda54c4c19ae908ff62fb57571b&mc_channel=banner" target="_blank"><img src="images/111.png">慕课网站
+                            <p>Spring Cloud微服务教程</p>
+                        </a></li>
+                        <li><a href="http://study.163.com/" target="_blank"><img src="images/222.png">网易云课堂
+                            <p>网上教学平台</p>
+                        </a></li>
+                        <li><a href="http://blog.csdn.net/winter_chen001/article/details/77249029" target="_blank"><img src="images/333.png">CSDN博客
+                            <p>技术栈博客</p>
+                        </a></li>
+                        <li><a href="https://www.cnblogs.com/lsx1993/p/4793124.html" target="_blank"><img src="images/444.png">博客园
+                            <p>优秀博客</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="clicks">
+                    <h2>热门点击</h2>
+                    <ol>
+                        <li><span><a href="javascript:;">[移动端]</a></span><a href="https://juejin.im/post/595599e75188250d99181801" target="_blank">移动端图片上传旋转、压缩的解决方案</a></li>
+                        <li><span><a href="javascript:;">[样式]</a></span><a href="https://juejin.im/post/5954cc43f265da6c2f0a970f" target="_blank">用css实现自定义虚线边框</a></li>
+                        <li><span><a href="javascript:;">[JavaScript]</a></span><a href="https://juejin.im/post/5954746b6fb9a06bc45d0284" target="_blank">不要做只会 JS 的程序员</a></li>
+                        <li><span><a href="javascript:;">[node]</a></span><a href="https://juejin.im/post/5954689a6fb9a06bbb32a368" target="_blank">为什么我们的业务适合用Node？</a></li>
+                        <li><span><a href="javascript:;">[样式]</a></span><a href="https://juejin.im/post/59530afc6fb9a06bbc4ad62c" target="_blank">css可维护方案：OOCSS VS BEM</a></li>
+                        <li><span><a href="javascript:;">[react]</a></span><a href="https://juejin.im/post/595243d96fb9a06bbd6f5ccd" target="_blank">React 进阶之高阶组件</a></li>
+                        <li><span><a href="javascript:;">[本地存储]</a></span><a href="https://juejin.im/post/595232535188250d8860cccf" target="_blank">利用localstorage实现本地消息缓存</a></li>
+                        <li><span><a href="javascript:;">[react]</a></span><a href="https://juejin.im/post/59522e57f265da6c3b27ab62" target="_blank">React 组件设计和分解思考</a></li>
+                        <li><span><a href="javascript:;">[html5]</a></span><a href="https://juejin.im/post/5951c4cf6fb9a06b9d5b5a67" target="_blank">H5互动的正确打开方式</a></li>
+                    </ol>
+                </div>
+            </aside>
+        </div>
+        <!--blogs end-->
+    </div>
+    <footer>
+        <div class="footer-mid">
+            <div class="links">
+                <h2>友情链接</h2>
+                <ul>
+                    <li><a href="">博客首页</a></li>
+                    <li><a href="http://blog.163.com/" target="_blank">CSDN.NET</a></li>
+                    <li><a href="http://blog.csdn.net/" target="_blank">网易博客</a></li>
+                </ul>
+            </div>
+            <div class="visitors">
+                <h2>联系我</h2>
+                <ul>
+                    <li>地址：广州市天河区五山路华南农业大学</li>
+                    <li>手机：18819258246</li>
+                    <li>E-mail：543527507@qq.com</li>
+                </ul>
+            </div>
+            <div class="links">
+                <h2>技术网站</h2>
+                <ul>
+                    <li><a href="http://www.imooc.com/" target="_blank">慕课网</a></li>
+                    <li><a href="http://study.163.com/" target="_blank">网易云课堂</a></li>
+                    <li><a href="https://ke.qq.com/" target="_blank">腾讯课堂</a></li>
+                </ul>
+            </div>
+            <section class="flickr">
+                <ul>
+                    <li><img src="images/chat.png"></li>
+                </ul>
+            </section>
+        </div>
+        <div class="footer-bottom">
+            <p>@Copyright 2018 Design by Dengjinhui</p>
+        </div>
+    </footer>
+</div>
+<script src="js/util/vue.js" type="text/javascript"></script>
+    <script src="js/util/vue-resource.js" type="text/javascript"></script>
+<script src="js/index.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Oliver's blog</title>
+</head>
+<body>
+<h2>Hello World!</h2>
+
+
+
+springmvc上传文件
+<form name="form1" action="/article/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="upload_file" />
+    <input type="submit" value="springmvc上传文件" />
+</form>
+
+
+富文本图片上传文件
+<form name="form2" action="/manage/product/richtext_img_upload.do" method="post" enctype="multipart/form-data">
+    <input type="file" name="upload_file" />
+    <input type="submit" value="富文本图片上传文件" />
+</form>
+asdsa
+<img src="ftp://localhost/img/948e9d69-fb00-4985-ba87-d73cbd091698.jpg"/>
+<!--用Nginx反向代理就能拿到ftp服务器的东西，不能直接使用ftp协议，因为http协议和ftp协议不同-->
+<img src="http://image.blogs.com/948e9d69-fb00-4985-ba87-d73cbd091698.jpg">
+</body>
+</html>

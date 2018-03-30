@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deng.customer.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.deng.customer.entity.User" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="USERNAME" property="username" jdbcType="CHAR" />
+    <result column="PASSWORD" property="password" jdbcType="CHAR" />
+    <result column="PROFESSION" property="profession" jdbcType="CHAR" />
+    <result column="PHONE" property="phone" jdbcType="CHAR" />
+    <result column="EMAIL" property="email" jdbcType="CHAR" />
+    <result column="IS_ADMIN" property="isAdmin" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USERNAME, PASSWORD, PROFESSION, PHONE, EMAIL, IS_ADMIN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.deng.customer.entity.User" >
+    insert into user (ID, USERNAME, PASSWORD, 
+      PROFESSION, PHONE, EMAIL, IS_ADMIN
+      )
+    values (#{id,jdbcType=CHAR}, #{username,jdbcType=CHAR}, #{password,jdbcType=CHAR}, 
+      #{profession,jdbcType=CHAR}, #{phone,jdbcType=CHAR}, #{email,jdbcType=CHAR}, #{isAdmin,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.deng.customer.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="profession != null" >
+        PROFESSION,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="isAdmin != null" >
+        IS_ADMIN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="profession != null" >
+        #{profession,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=CHAR},
+      </if>
+      <if test="isAdmin != null" >
+        #{isAdmin,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deng.customer.entity.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=CHAR},
+      </if>
+      <if test="profession != null" >
+        PROFESSION = #{profession,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=CHAR},
+      </if>
+      <if test="isAdmin != null" >
+        IS_ADMIN = #{isAdmin,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deng.customer.entity.User" >
+    update user
+    set USERNAME = #{username,jdbcType=CHAR},
+      PASSWORD = #{password,jdbcType=CHAR},
+      PROFESSION = #{profession,jdbcType=CHAR},
+      PHONE = #{phone,jdbcType=CHAR},
+      EMAIL = #{email,jdbcType=CHAR},
+      IS_ADMIN = #{isAdmin,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+</mapper>
