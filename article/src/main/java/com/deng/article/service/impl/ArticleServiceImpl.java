@@ -39,7 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
         //阅读量加一
         ArticleWithBLOBs articleWithBLOBs = articleMapperExt.selectByPrimaryKey(id);
         articleWithBLOBs.setReadNumber(articleWithBLOBs.getReadNumber()+1);
-        articleMapperExt.updateByPrimaryKeyWithBLOBs(articleWithBLOBs);
+        articleMapperExt.updateByPrimaryKeySelective(articleWithBLOBs);
         ArticleResult result = articleMapperExt.getArticle(id);
         result.setMessages(messageServiceRemote.getMessageByArticleId(id));
         return Response.createBySuccess(result);
@@ -49,9 +49,9 @@ public class ArticleServiceImpl implements ArticleService {
         //点赞量加一
         ArticleWithBLOBs articleWithBLOBs = articleMapperExt.selectByPrimaryKey(id);
         int likeNumber = articleWithBLOBs.getLikeNumber()+1;
-        articleWithBLOBs.setReadNumber(likeNumber);
-        articleMapperExt.updateByPrimaryKeyWithBLOBs(articleWithBLOBs);
-        return Response.createBySuccess(likeNumber);
+        articleWithBLOBs.setLikeNumber(likeNumber);
+        articleMapperExt.updateByPrimaryKeySelective(articleWithBLOBs);
+        return Response.createBySuccess(articleWithBLOBs.getLikeNumber());
     }
 
     public Response addArticle(ArticleRequest articleRequest){
