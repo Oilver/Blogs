@@ -33,6 +33,33 @@
     padding: 10px;
     border: none;
 }
+#remark .remark-floor{
+    padding: 0px 10px;
+}
+#remark .remark-user{
+    color:#4093c6;
+    width: 200px;
+}
+#remark .remark-time{
+    margin-left: 20px;
+    color: #777;
+}
+#remark .remark-content{
+    margin-top: 10px;
+}
+#remark .remark-floor-num{
+    margin-left: 20px;
+    color: #777;
+}
+#remark .reply-btn{
+    color:#4093c6;
+    float:right;
+}
+#remark .remark-container{
+    border-bottom: 1px dashed #ccc;
+    padding: 15px 10px 5px 10px;
+}
+
 .sub_box{
     height: 30px;
     line-height: 30px;
@@ -150,3 +177,5 @@ h2.t_nav a:last-child {
         -moz-transform: translateX(0px);
     }
 }
+
+

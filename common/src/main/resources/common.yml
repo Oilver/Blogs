@@ -8,11 +8,9 @@ spring:
         minIdle: 5
         maxActive: 20
         maxWait: 60000
-
         timeBetweenEvictionRunsMillis: 60000
         minEvictableIdleTimeMillis: 300000
         validationQuery: select 1 from dual
-
         testWhileIdle: true
         testOnBorrow: false
         testOnReturn: false

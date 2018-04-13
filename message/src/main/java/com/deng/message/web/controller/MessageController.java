@@ -23,7 +23,7 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @Check
+    //@Check
     @ApiOperation(value = "留言")
     @RequestMapping(value = "/message",method = RequestMethod.POST,produces = Const.JOSN)
     public Response addMessage(@RequestBody MessageRequest messageRequest){
@@ -31,7 +31,7 @@ public class MessageController {
         return messageService.addMessage(messageRequest);
     }
 
-    @Check
+    //@Check
     @ApiOperation(value = "回复")
     @RequestMapping(value = "/message/reply",method = RequestMethod.POST,produces = Const.JOSN)
     public Response reply(@RequestBody ReplyRequest replyRequest){

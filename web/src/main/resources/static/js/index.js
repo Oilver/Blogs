@@ -24,7 +24,9 @@ var vm = new Vue({
             detail:{},           // 获取文章详细页面
             currentTime:new Date(),   // 目前日期
             articleLimitValue:5,          // 每页面最多显示5条文章
-            moreMessage:"...显示更多"
+            moreMessage:"...显示更多",
+            remarkContent: null,            // 评论的内容
+            messagedObject:null  // 要回复的用户
         }
     },
     mounted(){
@@ -87,11 +89,63 @@ var vm = new Vue({
                 this.moreMessage = "...显示更多";
             }
         },
+        likeArticle:function (item) {
+            // 文章点赞
+            const params={"id":item.id};
+            this.$http.post("http://127.0.0.1:9091/article/likeArticle",params,{emulateJSON: true}).then(response=>{
+                if (response.status == 200){
+                    // 将传进来的文章的likeNumber设置为返回的data值
+                    item.likeNumber = response.body.data;
+                }
+            },response=>{
+                console.log("error!");
+            });
+        },
         login:function () {
             // 登录
         },
         register:function () {
             // 注册
+        },
+        submitRemark:function () {
+            // 提交评论事件
+            // 取得现有楼层，新评论要 +1
+            var newMessagesFloor = this.detail.messages.length + 1;
+            var updatedTime = getNowDate();
+            var updatedUser = "Oliver";
+            var userId = "619d5a25-986e-46f5-84a9-e0eeee00a592";
+            //  如果是回复别人 就要截取字符串
+            if (this.messagedObject){
+                var messageContent = this.remarkContent.substring(this.messagedObject.length,this.remarkContent.length);
+                updatedUser += " " + this.messagedObject.substring(0,this.messagedObject.length - 1);　
+            //    评论者变为　ｘｘ回复ｘｘ
+            }else{
+                //　不是回复
+                var messageContent = this.remarkContent;
+            }
+            const params={"articleId":this.detail.id,"content":messageContent,"floor":newMessagesFloor,"updatedTime":updatedTime,"updatedUser":updatedUser,"userId":userId};
+            this.$http.post("http://127.0.0.1:9091/message/message",params).then(response=>{
+                if (response.body.status == 100){
+                    // 将传进来的文章的likeNumber设置为返回的data值
+                    alert("留言成功！");
+                    this.remarkContent = "";
+                    this.messagedObject = null;
+                    this.showArticleDetails(this.detail.id);
+                }
+            },response=>{
+                console.log("error!");
+            });
+        },
+        replyMessage:function(messagedfloor) {
+                // 回复消息
+            var updatedUser = "Oliver";  // 存储已登录的用户
+            if (updatedUser == messagedfloor.updatedUser){
+                alert("不能对自己评论！");
+                return;
+            }
+            // 拼接
+            this.messagedObject = "回复--" + messagedfloor.floor + "楼--" + messagedfloor.updatedUser + ":";
+            this.remarkContent = this.messagedObject;
         }
     },
     filters:{
@@ -107,6 +161,10 @@ var vm = new Vue({
         // 限制最多显示的文章数
         articleLimit:function () {
             return this.article.slice(0,this.articleLimitValue);
+        },
+        // 评论倒序
+        remarkMessage:function () {
+            return this.detail.messages.reverse();
         }
     }
 })

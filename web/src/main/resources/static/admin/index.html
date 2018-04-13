@@ -9,6 +9,7 @@
 </head>
 <body>
 <!--header-->
+<div id="app">
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
@@ -27,7 +28,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">内容管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="content.html">内容首页</a></li>
+                        <li><a href="javascript:void(0)" @click="showContentIndex()">内容首页</a></li>
                         <li><a href="content_add.html">添加内容</a></li>
                     </ul>
                 </li>
@@ -51,7 +52,55 @@
     </div>
 </div>
 
+    <!-- 内容管理 start-->
+    <div class="content-admin" v-if="isInContentAdmin">
+        <ol class="breadcrumb container">
+            <li><a href="index.html">管理首页</a></li>
+            <li><span>内容管理</span></li>
+            <li><span>内容首页</span></li>
+        </ol>
+        <h3 class="container">内容首页</h3>
+        <table class="table table-hover container">
+            <tr>
+                <td>ID</td>
+                <td>分类名称</td>
+                <td>标题</td>
+                <td>作者</td>
+                <td>添加时间</td>
+                <td>阅读量</td>
+                <td>操作</td>
+            </tr>
+            <tr v-for="item in contentList">
+                <td>{{item.id}}</td>
+                <td>{{item.categoryName}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.updatedUser}}</td>
+                <td>{{item.updatedTime}}</td>
+                <td>{{item.readNumber}}</td>
+                <td>
+                    <a href="#">删除</a>
+                </td>
+            </tr>
+        </table>
+        <nav aria-label="..." class="container">
+            <ul class="pager">
+                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                <li>
+                    一共有 {{contentList.length}} 条数据，共 1 页，当前第 1 页
+                </li>
+
+                <li class="next"><a href="javascript:void(0);">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>
+    </div>
+    <!--内容管理 end-->
+
+</div>
+<script src="js/vue.js"></script>
+<script src="js/vue-resource.js"></script>
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/admin.js"></script>
 </body>
 </html>

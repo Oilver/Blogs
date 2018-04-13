@@ -1,7 +1,6 @@
 package com.deng.customer.mapper;
 
 import com.deng.customer.entity.User;
-import org.apache.ibatis.annotations.Mapper;
 
 public interface UserMapper {
     int deleteByPrimaryKey(String id);
