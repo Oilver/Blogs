@@ -12,6 +12,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -31,6 +34,24 @@ public class UserServiceImpl implements UserService {
         UserResult result = userMapperExt.selectLogin(username,password);
         if(null == result) {
             return Response.createByErrorMessage("密码错误");
+        }
+        //管理员
+        if(1 == result.getIsAdmin()){
+            Response response = new Response(250);
+            return response;
+        }
+        return Response.createBySuccess(result);
+    }
+
+    @Override
+    public Response<List<UserResult>> getUserList() {
+        List<UserResult> userList = userMapperExt.getUserList();
+        List<UserResult> result = new ArrayList<>();
+        for (UserResult u:userList
+             ) {
+            if (1 != u.getIsAdmin()){
+                result.add(u);
+            }
         }
         return Response.createBySuccess(result);
     }

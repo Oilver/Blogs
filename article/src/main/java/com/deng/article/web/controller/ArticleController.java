@@ -77,19 +77,25 @@ public class ArticleController {
         return articleService.deleteArticle(id);
     }
 
-    @ApiOperation(value = "上传图片")
-    @RequestMapping(value = "/upload",method = RequestMethod.POST,produces = Const.JOSN)
-    public Response upload(@RequestParam(value = "upload_file",required = false) MultipartFile file, HttpServletRequest request){
-            String path = request.getSession().getServletContext().getRealPath("upload");
-            String targetFileName = iFileService.upload(file,path);
-            String url = "http://image.blogs.com/" + targetFileName;
+    //@ApiOperation(value = "上传图片")
+    //@RequestMapping(value = "/upload",method = RequestMethod.POST,produces = Const.JOSN)
+    //public Response upload(@RequestParam(value = "upload_file",required = false) MultipartFile file, HttpServletRequest request){
+    //        String path = request.getSession().getServletContext().getRealPath("upload");
+    //        String targetFileName = iFileService.upload(file,path);
+    //        String url = "http://image.blogs.com/" + targetFileName;
+    //
+    //        Map fileMap = Maps.newHashMap();
+    //        fileMap.put("uri",targetFileName);
+    //        fileMap.put("url",url);
+    //        return Response.createBySuccess(fileMap);
+    //}
 
-            Map fileMap = Maps.newHashMap();
-            fileMap.put("uri",targetFileName);
-            fileMap.put("url",url);
-            return Response.createBySuccess(fileMap);
+    @ApiOperation(value = "上传生活照")
+    @RequestMapping(value = "/uploadLifeImage",method = RequestMethod.POST,produces = Const.JOSN)
+    public Response uploadImage(@RequestParam(value = "upload_file",required = false) MultipartFile file, HttpServletRequest request){
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        return iFileService.uploadLifeImage(file,path);
     }
-
     //@ApiOperation(value = "测试")
     //@RequestMapping(value = "/test",method = RequestMethod.POST)
     //public Response test(@RequestParam String id){

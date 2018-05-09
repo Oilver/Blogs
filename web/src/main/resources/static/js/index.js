@@ -16,10 +16,31 @@ var vm = new Vue({
     el:"#container",
     data(){
         return{
+            user:{
+                // 从sessionStorage里获取
+                username:window.sessionStorage.username || '',
+                profession:window.sessionStorage.profession || '',
+                id:window.sessionStorage.id || '',
+                email:window.sessionStorage.email || '',
+                phone:window.sessionStorage.phone || '',
+            },
+            regUser:{
+                regInputUserName:'',     // 注册的账户
+                regInputPassword:'',     // 注册的密码
+                regInputAgainPassword:'',     // 注册的再次输入密码
+                regInputPhone:'',     // 注册的电话
+                regInputEmail:'',     // 注册的邮箱
+                regInputPro:''          // 注册的专业
+            },
+            loginUser:{
+                inputUserName:'',       //  输入的账户
+                inputPassword:'',       // 输入的密码
+            },
             isIndex : true,         // 是不是在首页
             isList:false,           // 是不是在列表页
             isDetail:false,         // 是不是在详情页
-            active :0,          // 控制菜单烂active类
+            isClickMenu:false,         // 是否点击了用户菜单(注销)
+            active:0,          // 控制菜单烂active类
             article:[],         // 获取文章数据
             detail:{},           // 获取文章详细页面
             currentTime:new Date(),   // 目前日期
@@ -101,19 +122,89 @@ var vm = new Vue({
                 console.log("error!");
             });
         },
+        loginModal:function (status) {
+            // 登录模态框的显示
+            var modal = document.getElementById('loginModal');
+            if (status == 1) {
+                modal.style.display = "block";
+            }else{
+                modal.style.display = "none";
+            }
+        },
+        regModal:function (status) {
+            // 注册模态框的显示
+            var modal = document.getElementById('regModal');
+            if (status == 1) {
+                modal.style.display = "block";
+            }else{
+                modal.style.display = "none";
+            }
+        },
         login:function () {
             // 登录
+            const params={"username":this.loginUser.inputUserName,"password":this.loginUser.inputPassword};
+            this.$http.post("http://127.0.0.1:9091/customer/login",params).then(response=>{
+                if (response.body.status == 100){
+                    this.user = response.body.data;
+                    // sessionStorage
+                    window.sessionStorage.setItem("email",this.user.email);
+                    window.sessionStorage.setItem("username",this.user.username);
+                    window.sessionStorage.setItem("profession",this.user.profession);
+                    window.sessionStorage.setItem("id",this.user.id);
+                    window.sessionStorage.setItem("phone",this.user.phone);
+                    this.loginModal(0);
+                }else if (response.body.status == 250){
+                    //跳转到管理员页面
+                    window.location.href="admin/index.html";
+                }else if (response.body.status == 500){
+                    alert(response.body.msg);
+                }
+            },response=>{
+                console.log("error!");
+            });
         },
         register:function () {
             // 注册
+            // 相关注册逻辑判定
+            const params={"username":this.regUser.regInputUserName,"password":this.regUser.regInputPassword,
+            "phone":this.regUser.regInputPhone,"email":this.regUser.regInputEmail,"profession":this.regUser.regInputPro};
+            this.$http.post("http://127.0.0.1:9091/customer/user",JSON.stringify(params)).then(response=>{
+                if (response.body.status == 100){
+                    // sessionStorage
+                    alert("注册成功！");
+                    window.sessionStorage.setItem("email",this.regUser.regInputEmail);
+                    window.sessionStorage.setItem("username",this.regUser.regInputUserName);
+                    window.sessionStorage.setItem("profession",this.regUser.regInputPro);
+                    window.sessionStorage.setItem("phone",this.regUser.regInputPhone);
+                    this.regModal(0);
+                }else if (response.body.status == 500){
+                    alert(response.body.msg+"！");
+                }
+            },response=>{
+                console.log("error!");
+            });
+        },
+        logout:function () {
+        //     注销
+            const params={"userId":this.user.id};
+            this.$http.get("http://127.0.0.1:9091/customer/logout",{params:params}).then(response=>{
+                if (response.body.status == 100){
+                    alert("注销成功！");
+                    window.sessionStorage.clear();
+                    window.location = '/index.html';
+                    this.isClickMenu = false;
+                }
+            },response=>{
+                console.log("error!");
+            });
         },
         submitRemark:function () {
             // 提交评论事件
             // 取得现有楼层，新评论要 +1
             var newMessagesFloor = this.detail.messages.length + 1;
             var updatedTime = getNowDate();
-            var updatedUser = "Oliver";
-            var userId = "619d5a25-986e-46f5-84a9-e0eeee00a592";
+            var updatedUser = window.sessionStorage.username;
+            var userId = window.sessionStorage.id;
             //  如果是回复别人 就要截取字符串
             if (this.messagedObject){
                 var messageContent = this.remarkContent.substring(this.messagedObject.length,this.remarkContent.length);
@@ -131,6 +222,8 @@ var vm = new Vue({
                     this.remarkContent = "";
                     this.messagedObject = null;
                     this.showArticleDetails(this.detail.id);
+                }else if(response.body.status == 500){
+                    alert(response.body.msg);
                 }
             },response=>{
                 console.log("error!");
@@ -138,7 +231,7 @@ var vm = new Vue({
         },
         replyMessage:function(messagedfloor) {
                 // 回复消息
-            var updatedUser = "Oliver";  // 存储已登录的用户
+            var updatedUser =window.sessionStorage.username;// 存储已登录的用户
             if (updatedUser == messagedfloor.updatedUser){
                 alert("不能对自己评论！");
                 return;

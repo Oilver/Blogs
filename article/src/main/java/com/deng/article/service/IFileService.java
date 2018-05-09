@@ -1,5 +1,6 @@
 package com.deng.article.service;
 
+import com.deng.common.response.Response;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -7,5 +8,5 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface IFileService {
 
-    String upload(MultipartFile file, String path);
+    Response uploadLifeImage(MultipartFile file, String path);
 }

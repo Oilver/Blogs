@@ -13,11 +13,26 @@
 <div id="container">
     <header>
         <div class="user-header">
-                <span><a href="#" @click="register()"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;注册</a></span>
-                <span><a href="#" @click="login()"><i class="fa fa-user"></i>&nbsp;&nbsp;登录</a></span>
+            <!-- 未注册时，显示登录注册-->
+            <div v-if="user.username ==''">
+                <span><a href="javascript:void(0)" @click="regModal(1)"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;注册</a></span>
+                <span><a href="javascript:void(0)" @click="loginModal(1)"><i class="fa fa-user"></i>&nbsp;&nbsp;登录</a></span>
+            </div>
+            <!-- 登录后，显示账户名-->
+            <div v-if="user.username !=''">
+                <span class="user-info" @click = "isClickMenu = !isClickMenu">
+                    <i class="fa fa-user" style="color: #fff;"></i>
+                    <a href="javascript:void(0);" style="margin: 0 10px;">{{user.username}}</a>
+                    <i class="fa fa-caret-down"></i>
+                <ul class="dropdown-menu" v-show="isClickMenu">
+                    <li><a href="javascript:void(0)" @click="logout()">注销用户</a></li>
+                </ul>
+                </span>
+
+            </div>
             <span class="search" style="margin: 0;position:relative;">
                 <input type="text" placeholder="搜索文章"><i class="fa fa-search search-icon"></i>
-            </span>
+                </span>
         </div>
         <ul class="nav">
             <li :class="{active:active == 0}"><a href="#" @click="isIndex = true,isDetail = false,isList=false,active =0,getData(0)">博客首页</a></li>
@@ -117,8 +132,6 @@
                                 <span> {{item.content}} </span>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -209,6 +222,63 @@
             <p>@Copyright 2018 Design by Dengjinhui</p>
         </div>
     </footer>
+    <!-- 登录模态框-->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>博客登录</h2>
+                    <span class="close" @click="loginModal(0)">&times</span>
+                </div>
+                <div class="modal-body">
+                    <div><label for="inputUserName">账户：</label>
+                        <input type="text" id="inputUserName" placeholder="请填写账户" v-model="loginUser.inputUserName">
+                    </div>
+                    <div><label for="inputPassword">密码：</label>
+                        <input type="password" id="inputPassword" placeholder="请填写密码" v-model="loginUser.inputPassword">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="loginCancelBtn" @click="loginModal(0)">注册</button>
+                    <button id="loginBtn" @click="login()">登录</button>
+                </div>
+            </div>
+        </div>
+    <!-- 注册模态框-->
+    <div id="regModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>博客账号注册</h2>
+                <span class="close" @click="regModal(0)">&times</span>
+            </div>
+            <div class="modal-body">
+                <div><label for="regInputUserName">账户：</label>
+                    <input type="text" id="regInputUserName" placeholder="请填写账户" v-model="regUser.regInputUserName">
+                </div>
+                <div><label for="regInputPassword">密码：</label>
+                    <input type="password" id="regInputPassword" placeholder="请填写密码" v-model="regUser.regInputPassword">
+                </div>
+                <div><label for="regInputAgainPassword">确认密码：</label>
+                    <input type="password" id="regInputAgainPassword" placeholder="请再次填写密码" v-model="regUser.regInputAgainPassword">
+                </div>
+                <div><label for="regInputPhone">电话号码：</label>
+                    <input type="text" id="regInputPhone" placeholder="请填写电话号码" v-model="regUser.regInputPhone">
+                </div>
+                <div><label for="regInputEmail">邮箱：</label>
+                    <input type="text" id="regInputEmail" placeholder="请填写邮箱" v-model="regUser.regInputEmail">
+                </div>
+                <div><label for="regInputPro">专业：</label>
+                    <input type="text" id="regInputPro" placeholder="请填写专业" v-model="regUser.regInputPro">
+                </div>
+                <div style="text-align: center">
+                    <input type="checkbox">我已阅读<a href="javascript:void(0);" style="text-decoration: underline">《博客用户注册协议》</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="regCancelBtn" @click="regModal(0)">取消</button>
+                <button id="regBtn" @click="register()">注册</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="js/util/vue.js" type="text/javascript"></script>
 <script src="js/util/vue-resource.js" type="text/javascript"></script>

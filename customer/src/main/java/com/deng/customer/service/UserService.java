@@ -6,6 +6,8 @@ import com.deng.customer.web.request.LoginRequest;
 import com.deng.customer.web.request.UserRequest;
 import com.deng.customer.web.result.UserResult;
 
+import java.util.List;
+
 public interface UserService {
 
     /**
@@ -13,6 +15,8 @@ public interface UserService {
      * @return
      */
     Response<UserResult> login(LoginRequest loginRequest);
+
+    Response<List<UserResult>> getUserList();
 
     Response<UserResult> getUser(String id);
 

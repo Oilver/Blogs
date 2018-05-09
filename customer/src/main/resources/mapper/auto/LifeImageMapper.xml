@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deng.customer.mapper.LifeImageMapper" >
+  <resultMap id="BaseResultMap" type="com.deng.customer.entity.LifeImage" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="URL" property="url" jdbcType="CHAR" />
+    <result column="SIZES" property="sizes" jdbcType="DECIMAL" />
+    <result column="DATATIME" property="datatime" jdbcType="TIMESTAMP" />
+    <result column="TITLE" property="title" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, URL, SIZES, DATATIME, TITLE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from life_image
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from life_image
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.deng.customer.entity.LifeImage" >
+    insert into life_image (ID, URL, SIZES, DATATIME, 
+      TITLE)
+    values (#{id,jdbcType=CHAR}, #{url,jdbcType=CHAR}, #{sizes,jdbcType=DECIMAL}, #{datatime,jdbcType=TIMESTAMP}, 
+      #{title,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deng.customer.entity.LifeImage" >
+    insert into life_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="sizes != null" >
+        SIZES,
+      </if>
+      <if test="datatime != null" >
+        DATATIME,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=CHAR},
+      </if>
+      <if test="sizes != null" >
+        #{sizes,jdbcType=DECIMAL},
+      </if>
+      <if test="datatime != null" >
+        #{datatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deng.customer.entity.LifeImage" >
+    update life_image
+    <set >
+      <if test="url != null" >
+        URL = #{url,jdbcType=CHAR},
+      </if>
+      <if test="sizes != null" >
+        SIZES = #{sizes,jdbcType=DECIMAL},
+      </if>
+      <if test="datatime != null" >
+        DATATIME = #{datatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deng.customer.entity.LifeImage" >
+    update life_image
+    set URL = #{url,jdbcType=CHAR},
+      SIZES = #{sizes,jdbcType=DECIMAL},
+      DATATIME = #{datatime,jdbcType=TIMESTAMP},
+      TITLE = #{title,jdbcType=CHAR}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

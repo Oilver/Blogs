@@ -14,4 +14,6 @@ public class UserResult {
     private String phone;
 
     private String email;
+
+    private int isAdmin;
 }

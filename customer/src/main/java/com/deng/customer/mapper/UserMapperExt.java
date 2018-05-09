@@ -4,6 +4,8 @@ import com.deng.customer.web.result.UserResult;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapperExt extends UserMapper{
 
@@ -22,4 +24,6 @@ public interface UserMapperExt extends UserMapper{
      */
     UserResult selectLogin(@Param(value = "username") String username,
                            @Param(value = "password") String password);
+
+    List<UserResult> getUserList();
 }

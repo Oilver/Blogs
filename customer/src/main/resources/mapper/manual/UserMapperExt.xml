@@ -7,9 +7,14 @@
     </select>
 
     <select id="selectLogin" resultType="com.deng.customer.web.result.UserResult">
-        select id , username , profession , phone , email
+        select id , username , profession , phone , email , is_admin as isAdmin
         from USER
         where USERNAME = #{username} AND PASSWORD = #{password}
+    </select>
+
+    <select id="getUserList" resultType="com.deng.customer.web.result.UserResult">
+        select id , username , profession , phone , email , is_admin as isAdmin
+        from USER
     </select>
 
 </mapper>

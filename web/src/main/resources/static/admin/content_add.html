@@ -28,7 +28,6 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">内容管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="content.html">内容首页</a></li>
-                        <!--<li><a href="javascript:void(0)" @click="showContentIndex()">内容首页</a></li>-->
                         <li><a href="content_add.html">添加内容</a></li>
                     </ul>
                 </li>
@@ -51,7 +50,33 @@
     <li><span>内容添加</span></li>
 </ol>
 <h3 class="container">内容添加</h3>
-<form class="container" method="post">
+<!--<form class="container" method="post">-->
+    <!--<div class="form-group">-->
+        <!--<label for="category">分类：</label>-->
+        <!--<select name="category" id="category" class="form-control">-->
+            <!--<option value="算法">算法</option>-->
+            <!--<option value="数据结构">数据结构</option>-->
+            <!--<option value="网络技术">网络技术</option>-->
+        <!--</select>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<label for="title">标题：</label>-->
+        <!--<input type="text" name="title" class="form-control" id="title" placeholder="请输入内容标题">-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<label for="description">简介：</label>-->
+        <!--<textarea rows="5" name="description" class="form-control" id="description" placeholder="请输入内容简介"></textarea>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<div class="form-group">-->
+            <!--<label for="description">内容：</label>-->
+            <!--<textarea rows="10" name="content" class="form-control" id="content" placeholder="请输入内容"></textarea>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<button type="submit" class="btn btn-default">提交</button>-->
+<!--</form>-->
+
+<div class="article">
     <div class="form-group">
         <label for="category">分类：</label>
         <select name="category" id="category" class="form-control">
@@ -65,19 +90,22 @@
         <input type="text" name="title" class="form-control" id="title" placeholder="请输入内容标题">
     </div>
     <div class="form-group">
-        <label for="description">简介：</label>
-        <textarea rows="5" name="description" class="form-control" id="description" placeholder="请输入内容简介"></textarea>
+        <label for="introduction">简介：</label>
+        <textarea rows="5" name="introduction" class="form-control" id="introduction" placeholder="请输入内容简介"></textarea>
     </div>
     <div class="form-group">
         <div class="form-group">
-            <label for="description">内容：</label>
+            <label for="content">内容：</label>
             <textarea rows="10" name="content" class="form-control" id="content" placeholder="请输入内容"></textarea>
         </div>
     </div>
-    <button type="submit" class="btn btn-default">提交</button>
-</form>
+    <button id="addArticle" @click="addArticle()" class="btn btn-default">提交</button>
+</div>
 
+<script src="js/vue.js"></script>
+<script src="js/vue-resource.js"></script>
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/article.js"></script>
 </body>
 </html>

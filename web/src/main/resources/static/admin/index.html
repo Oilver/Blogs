@@ -17,11 +17,11 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="user.html">用户管理</a></li>
+                <li><a href="javascript:void(0)" @click="showUserIndex()">用户管理</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">栏目管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="category.html">分类首页</a></li>
+                        <li><a href="javascript:void(0)" @click="showCategoryIndex()">分类首页</a></li>
                         <li><a href="category_add.html">提交分类</a></li>
                     </ul>
                 </li>
@@ -29,15 +29,16 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">内容管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="javascript:void(0)" @click="showContentIndex()">内容首页</a></li>
+                        <!--<li><a href="content.html">内容首页</a></li>-->
                         <li><a href="content_add.html">添加内容</a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Oliver<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">退出</a></li>
+                        <li><a href="../index.html">退出</a></li>
                     </ul>
                 </li>
             </ul>
@@ -52,25 +53,20 @@
     </div>
 </div>
 
-    <!-- 内容管理 start-->
-    <div class="content-admin" v-if="isInContentAdmin">
-        <ol class="breadcrumb container">
-            <li><a href="index.html">管理首页</a></li>
-            <li><span>内容管理</span></li>
-            <li><span>内容首页</span></li>
-        </ol>
-        <h3 class="container">内容首页</h3>
+    <!-- 内容管理/分类首页 start-->
+    <div class="content-admin" v-if="isInContentAdmin || isInCategoryAdmin || isInUserAdmin">
+        <!--<ol class="breadcrumb container">-->
+            <!--<li><a href="index.html">管理首页</a></li>-->
+            <!--<li><span>内容管理</span></li>-->
+            <!--<li><span>内容首页</span></li>-->
+        <!--</ol>-->
+        <h3 class="container">{{title}}</h3>
         <table class="table table-hover container">
             <tr>
-                <td>ID</td>
-                <td>分类名称</td>
-                <td>标题</td>
-                <td>作者</td>
-                <td>添加时间</td>
-                <td>阅读量</td>
-                <td>操作</td>
+               <td v-for="td in tableTd">{{td}}</td>
             </tr>
-            <tr v-for="item in contentList">
+            <!-- 如果是内容首页 -->
+            <tr v-for="item in contentList" v-if="isInContentAdmin">
                 <td>{{item.id}}</td>
                 <td>{{item.categoryName}}</td>
                 <td>{{item.title}}</td>
@@ -80,6 +76,25 @@
                 <td>
                     <a href="#">删除</a>
                 </td>
+            </tr>
+            <!-- 如果是分类首页 -->
+            <tr v-for="item in contentList" v-if="isInCategoryAdmin">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>
+                    <a href="#">删除</a>
+                </td>
+            </tr>
+            <!-- 如果是用户首页 -->
+            <tr v-for="item in contentList" v-if="isInUserAdmin">
+                <td>{{item.id}}</td>
+                <td>{{item.username}}</td>
+                <td>{{item.profession}}</td>
+                <td>{{item.phone}}</td>
+                <td>{{item.email}}</td>
+                <!--<td>-->
+                    <!--<a href="#">删除</a>-->
+                <!--</td>-->
             </tr>
         </table>
         <nav aria-label="..." class="container">

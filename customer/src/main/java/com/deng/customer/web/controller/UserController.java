@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -52,7 +53,14 @@ public class UserController {
         return userService.addUser(userRequest);
     }
 
-    @Check
+    //@Check
+    @ApiOperation(value = "用户列表")
+    @RequestMapping(value = "/userList",method = RequestMethod.GET,produces = Const.JOSN)
+    public Response<List<UserResult>> getUserList(){
+        return userService.getUserList();
+    }
+
+    //@Check
     @ApiOperation(value = "查询用户")
     @RequestMapping(value = "/user",method = RequestMethod.GET,produces = Const.JOSN)
     public Response<UserResult> getUser(@RequestParam String userId,
@@ -60,7 +68,7 @@ public class UserController {
         return userService.getUser(id);
     }
 
-    @Check
+    //@Check
     @ApiOperation(value = "删除用户")
     @RequestMapping(value = "/user",method = RequestMethod.DELETE,produces = Const.JOSN)
     public Response deleteUser(@RequestParam String userId,
@@ -70,7 +78,7 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
-    @Check
+    //@Check
     @ApiOperation(value = "修改用户")
     @RequestMapping(value = "/user",method = RequestMethod.PUT,produces = Const.JOSN)
     public Response updateUser(@RequestBody UserRequest userRequest){
