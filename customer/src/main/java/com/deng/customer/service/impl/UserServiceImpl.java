@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService {
         String username = loginRequest.getUsername();
         String password = MD5Util.MD5EncodeUtf8(loginRequest.getPassword());
         //登录
-        UserResult result = userMapperExt.selectLogin(username,password);
-        if(null == result) {
+        UserResult result = userMapperExt.selectLogin(username, password);
+        if (null == result) {
             return Response.createByErrorMessage("密码错误");
         }
         //管理员
-        if(1 == result.getIsAdmin()){
+        if (1 == result.getIsAdmin()) {
             Response response = new Response(250);
             return response;
         }
@@ -47,9 +47,9 @@ public class UserServiceImpl implements UserService {
     public Response<List<UserResult>> getUserList() {
         List<UserResult> userList = userMapperExt.getUserList();
         List<UserResult> result = new ArrayList<>();
-        for (UserResult u:userList
-             ) {
-            if (1 != u.getIsAdmin()){
+        for (UserResult u : userList
+        ) {
+            if (1 != u.getIsAdmin()) {
                 result.add(u);
             }
         }
@@ -64,24 +64,27 @@ public class UserServiceImpl implements UserService {
             return Response.createByErrorMessage("该用户名已存在");
         }
         User user = new User();
-        BeanUtils.copyProperties(userRequest,user);
+        BeanUtils.copyProperties(userRequest, user);
         //MD5加密
         user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
         //不是管理员
         user.setIsAdmin(0);
-        userMapperExt.insert(user);
+        check = userMapperExt.insert(user);
+        if (1 != check) {
+            return Response.createByErrorMessage("注册失败");
+        }
         return Response.createBySuccess("注册成功");
     }
 
     @Override
     public Response<UserResult> getUser(String id) {
         User user = userMapperExt.selectByPrimaryKey(id);
-        if(null == user){
+        if (null == user) {
             return Response.createByErrorMessage("不存在该用户!");
         }
         UserResult result = new UserResult();
         //复制信息
-        BeanUtils.copyProperties(user,result);
+        BeanUtils.copyProperties(user, result);
         return Response.createBySuccess(result);
     }
 
@@ -94,7 +97,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response updateUser(UserRequest userRequest) {
         User user = new User();
-        BeanUtils.copyProperties(userRequest,user);
+        BeanUtils.copyProperties(userRequest, user);
         userMapperExt.updateByPrimaryKeySelective(user);
         return Response.createBySuccess("修改成功");
     }

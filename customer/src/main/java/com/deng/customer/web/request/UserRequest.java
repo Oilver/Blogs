@@ -1,6 +1,5 @@
 package com.deng.customer.web.request;
 
-import com.deng.common.request.BaseCheckRequest;
 import com.deng.common.request.BaseRequest;
 import lombok.Data;
 

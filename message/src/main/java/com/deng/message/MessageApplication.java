@@ -3,6 +3,7 @@ package com.deng.message;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import javax.servlet.MultipartConfigElement;
 @Configuration
 @EnableSwagger2
 @EnableAspectJAutoProxy
+@ServletComponentScan("com.deng.message.config")
 public class MessageApplication {
 
     public static void main(String[] args) {

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CheckUserAop {
 
     @Pointcut("@annotation(com.deng.common.annotation.Check)")
-    public void pointCut(){
+    public void pointCut() {
     }
 
     @Around("pointCut()")
@@ -31,18 +31,17 @@ public class CheckUserAop {
 
         Object[] paramValues = joinPoint.getArgs();
         String[] paramNames = ((CodeSignature) joinPoint.getSignature()).getParameterNames();
-        for (int i = 0;i < paramValues.length;i++){
-            if(paramNames[i].equals("userId")){
-                if(null == request.getSession().getAttribute((String)paramValues[i])){
+        for (int i = 0; i < paramValues.length; i++) {
+            if (paramNames[i].equals("userId")) {
+                if (null == request.getSession().getAttribute((String) paramValues[i])) {
                     return Response.createByErrorMessage("您还没登录，请先登录！");
                 }
                 break;
             }
-            if (paramValues[i] instanceof BaseCheckRequest){
-                BaseCheckRequest baseCheckRequest = (BaseCheckRequest)paramValues[i];
-                if(null == request.getSession().getAttribute(baseCheckRequest.getUserId())){
+            if (paramValues[i] instanceof BaseCheckRequest) {
+                BaseCheckRequest baseCheckRequest = (BaseCheckRequest) paramValues[i];
+                if (null == request.getSession().getAttribute(baseCheckRequest.getUserId())) {
                     return Response.createByErrorMessage("您还没登录，请先登录！");
-
                 }
                 break;
             }

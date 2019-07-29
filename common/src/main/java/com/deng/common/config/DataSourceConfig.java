@@ -22,7 +22,7 @@ import java.sql.SQLException;
 @EnableTransactionManagement
 @Primary
 @Data
-@ConfigurationProperties(prefix="spring.datasource")
+@ConfigurationProperties(prefix = "spring.datasource")
 public class DataSourceConfig implements TransactionManagementConfigurer {
     private Logger logger = LoggerFactory.getLogger(DataSourceConfig.class);
 
@@ -48,7 +48,7 @@ public class DataSourceConfig implements TransactionManagementConfigurer {
     private String filters;
     private String connectionProperties;
 
-    @Bean     //声明其为Bean实例
+    @Bean
     public DataSource dataSource() {
         //DruidDataSource datasource = new DruidDataSource();
         //datasource.setUrl(url);
@@ -80,8 +80,8 @@ public class DataSourceConfig implements TransactionManagementConfigurer {
         DruidDataSource datasource = new DruidDataSource();
         datasource.setUrl("jdbc:mysql://127.0.0.1:3306/blogs");
         datasource.setUsername("root");
-        datasource.setPassword("");
-        datasource.setDriverClassName("com.mysql.jdbc.Driver");
+        datasource.setPassword("admin");
+        datasource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
         //configuration
         datasource.setInitialSize(5);

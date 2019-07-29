@@ -3,7 +3,7 @@
 <mapper namespace="com.deng.customer.mapper.UserMapperExt" >
 
     <select id="checkUserName" resultType="int">
-        SELECT COUNT(*) from USER WHERE USERNAME = #{username}
+        SELECT COUNT(1) from USER WHERE USERNAME = #{username}
     </select>
 
     <select id="selectLogin" resultType="com.deng.customer.web.result.UserResult">

@@ -2,6 +2,7 @@ package com.deng.message.entity;
 
 import java.util.Date;
 
+
 public class Message {
     private String id;
 
