@@ -3,7 +3,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/blogs
     username: root
-    password: Dengjinhui123
+    password: 
     initialSize: 5
     minIdle: 5
     maxActive: 20
