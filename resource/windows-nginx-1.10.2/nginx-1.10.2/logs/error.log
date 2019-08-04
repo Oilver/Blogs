@@ -1,0 +1,7 @@
+2019/08/04 15:05:45 [warn] 29536#39540: server name "http://www.myblogs.com/" has suspicious symbols in D:\blogs\windows-nginx-1.10.2\nginx-1.10.2/conf/vhost/www.blogs.com.conf:5
+2019/08/04 15:05:45 [emerg] 29536#39540: could not build server_names_hash, you should increase server_names_hash_bucket_size: 32
+2019/08/04 15:06:24 [warn] 29300#10756: server name "http://www.myblogs.com" has suspicious symbols in D:\blogs\windows-nginx-1.10.2\nginx-1.10.2/conf/vhost/www.blogs.com.conf:5
+2019/08/04 15:06:24 [warn] 39904#34344: server name "http://www.myblogs.com" has suspicious symbols in D:\blogs\windows-nginx-1.10.2\nginx-1.10.2/conf/vhost/www.blogs.com.conf:5
+2019/08/04 15:07:40 [error] 39904#39532: *1 CreateFile() "D:\blogs\windows-nginx-1.10.2\nginx-1.10.2/html/index" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /index HTTP/1.1", host: "www.myblogs.com"
+2019/08/04 15:10:06 [warn] 37940#33672: server name "http://www.myblogs.com" has suspicious symbols in D:\blogs\windows-nginx-1.10.2\nginx-1.10.2/conf/vhost/www.blogs.com.conf:5
+2019/08/04 15:10:06 [warn] 24480#35092: server name "http://www.myblogs.com" has suspicious symbols in D:\blogs\windows-nginx-1.10.2\nginx-1.10.2/conf/vhost/www.blogs.com.conf:5
