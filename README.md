@@ -10,9 +10,9 @@
 
 4. 给C:\Windows\System32\drivers\etc\hosts文件添加  （1）127.0.0.1	image.blogs.com （2）127.0.0.1	lifeimage.blogs.com （用于Nginx反向代理到图片文件夹），启动Nginx服务器
 
-5.一定要下载Redis，并且运行（端口默认），否则启动不了。因为项目用到Spring Session+Redis统一Session信息
+5. 一定要下载Redis，并且运行（端口默认），否则启动不了。因为项目用到Spring Session+Redis统一Session信息
 
-6.先启动Server的入口类，再启动其他四个模块的入口类，访问 http://127.0.0.1:9091 
+6. 先启动Server的入口类，再启动其他四个模块的入口类，访问 http://127.0.0.1:9091 
 
 注意：
    （1）项目前端采用Vue框架，由于本人对前端不熟，于是写出的前端代码非常一般，并且前端代码在web模块中，并没有真正意义上的前后端分离。使用者可以优化前端代码，增加更多有趣的功能
