@@ -41,7 +41,7 @@
         <swagger2.version>2.7.0</swagger2.version>
         <redis.version>2.1.6.RELEASE</redis.version>
         <spring-session.version>1.3.1.RELEASE</spring-session.version>
-        <common-net.version>3.6</common-net.version>
+        <common-net.version>3.9.0</common-net.version>
     </properties>
 
     <!--dependencyManagement 不会导致子模板直接引入依赖，能够有效地帮我们维护依赖一致性-->
